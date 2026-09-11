@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astra 3D Resource Hub</title>
+<meta name="description" content="Curated Astra, Blender, CAD, BIM, Three.js and AI 3D workflow resources.">
+<meta property="og:title" content="Astra 3D Resource Hub">
+<meta property="og:description" content="AI 3D、Blender、CAD、BIM、Three.js 與工程 Prompt 資源導航">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header id="site-header" role="banner">
+  <div class="container header-inner">
+    <div class="brand" aria-label="Astra 3D Resource Hub">
+      <span class="brand-mark">▲</span>
+      <span class="brand-text">Astra 3D Resource Hub</span>
+    </div>
+    <nav class="header-nav" aria-label="主導航">
+      <a href="#home" class="nav-link">首頁</a>
+      <a href="#resources-section" class="nav-link">資源</a>
+      <a href="#prompts" class="nav-link">Prompt</a>
+      <a href="#sources" class="nav-link">來源</a>
+      <a href="https://github.com/USERNAME/astra-3d-resource-hub" target="_blank" rel="noopener noreferrer" class="nav-link github-link" aria-label="GitHub Repo">GitHub</a>
+      <button id="themeToggle" class="icon-btn" aria-label="切換深淺色模式">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container">
+      <h1 class="hero-title">Astra 3D Resource Hub</h1>
+      <p class="hero-subtitle">AI 3D、Blender、CAD、BIM、<br>Three.js 與工程 Prompt 資源導航</p>
+      <div class="search-wrap">
+        <label for="searchInput" class="sr-only">搜尋資源</label>
+        <input id="searchInput" type="search" placeholder="搜尋 Prompt、Blender、CAD、BIM、Three.js..." autocomplete="off" spellcheck="false">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+      </div>
+      <div class="search-meta">
+        <span id="resultCount" aria-live="polite">載入中...</span>
+        <button id="clearFiltersBtn2" class="link-btn">清除篩選</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section id="filters" class="filters container" aria-label="篩選區">
+    <div class="filter-block">
+      <h2 class="filter-title">快速分類</h2>
+      <div id="categoryFilters" class="chip-group" role="group" aria-label="主要分類"></div>
+    </div>
+    <div class="filter-block">
+      <h2 class="filter-title">工程用途</h2>
+      <div id="useCaseFilters" class="chip-group" role="group" aria-label="用途分類"></div>
+    </div>
+    <div class="filter-block">
+      <div class="filter-header-row">
+        <h2 class="filter-title">熱門標籤</h2>
+        <button id="toggleTagsBtn" class="link-btn small">顯示全部</button>
+      </div>
+      <div id="tagFilters" class="chip-group tags" role="group" aria-label="標籤篩選"></div>
+    </div>
+    <div class="filter-actions">
+      <div class="action-left">
+        <label for="sortSelect" class="sr-only">排序</label>
+        <select id="sortSelect" class="select">
+          <option value="featured">精選優先</option>
+          <option value="name">名稱 A-Z</option>
+          <option value="newest">最新加入</option>
+        </select>
+        <button id="favoritesOnlyBtn" class="btn secondary" aria-pressed="false">☆ 只看收藏</button>
+        <button id="clearFiltersBtn" class="btn secondary">清除篩選</button>
+      </div>
+      <div class="action-right">
+        <span class="hint">提示：篩選條件會寫入 URL，可直接分享</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section id="resources-section" class="section container">
+    <div id="errorState" class="state-card error" hidden role="alert">
+      <h3>資源資料載入失敗。</h3>
+      <p>請確認 <code>data/resources.json</code> 格式是否正確。</p>
+      <p class="muted">錯誤：<span id="errorMsg"></span></p>
+    </div>
+    <div id="resourceGrid" class="grid"></div>
+    <div id="emptyState" class="state-card empty" hidden>
+      <h3>找不到符合條件的資源。</h3>
+      <p>請嘗試：</p>
+      <ul>
+        <li>移除部分篩選</li>
+        <li>使用其他關鍵字</li>
+      </ul>
+      <button id="emptyClearBtn" class="btn">清除篩選</button>
+    </div>
+  </section>
+
+  <!-- Featured -->
+  <section id="featured" class="section container featured-section">
+    <div class="section-header">
+      <h2>我的精選</h2>
+      <p class="muted">只顯示 <code>featured: true</code> 的項目，真正值得研究的案例。</p>
+    </div>
+    <div id="featuredGrid" class="grid"></div>
+  </section>
+
+  <!-- Prompt Library -->
+  <section id="prompts" class="section container">
+    <div class="section-header">
+      <h2>Prompt Library</h2>
+      <p class="muted">工程版 Prompt，可直接複製使用。分類：建築、CAD、Blender、BIM、Three.js、模型驗證、Agent</p>
+      <div id="promptCategoryFilters" class="chip-group"></div>
+    </div>
+    <div id="promptGrid" class="prompt-grid"></div>
+  </section>
+
+  <!-- Sources -->
+  <section id="sources" class="section container">
+    <div class="section-header">
+      <h2>GitHub / 來源區</h2>
+    </div>
+    <div class="source-card">
+      <p>本站為個人 3D AI 資源導航與 Prompt 索引，資料來源屬於原作者。</p>
+      <ul>
+        <li>第一批資料整理自 <code>TripoGrowthLab/awesome-astra-prompts</code>，僅整理 Title / Category / Description / Tags，完整 Prompt 優先使用原始連結。</li>
+        <li>本站所有範例資料若無真實 URL，皆留空，不虛構 GitHub / Demo / Source Code 連結。</li>
+        <li>新增資料只需修改 <code>data/resources.json</code>。</li>
+      </ul>
+      <p>
+        <a href="https://github.com/USERNAME/astra-3d-resource-hub" target="_blank" rel="noopener noreferrer" class="btn">前往 GitHub Repo</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="footer">
+  <div class="container footer-inner">
+    <div>
+      <strong>Astra 3D Resource Hub</strong>
+      <p class="muted">Curated for AI-assisted 3D workflow research.</p>
+      <p class="muted">Data sources belong to their respective authors.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/USERNAME/astra-3d-resource-hub" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="#home">回到頂部 ↑</a>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden>已複製</div>
+
+<script src="./app.js" type="module"></script>
+</body>
+</html>
