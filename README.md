@@ -4,9 +4,9 @@
 
 一頁式靜態網站，整理 GPT-6 Astra 相關 Prompt、Blender 建模、Three.js / WebGPU 3D、CAD / 建築 / BIM、Unreal / Unity、AI Agent 操作 3D 軟體等資源，並提供可直接複製的工程版 Prompt。
 
-**線上預覽**： `https://USERNAME.github.io/astra-3d-resource-hub/`
+**線上預覽**： `https://rita112025-cpu.github.io/astra-3d-resource-hub/`
 
-請將 `USERNAME` 替換為你的 GitHub 用戶名。
+請將 `rita112025-cpu` 替換為你的 GitHub 用戶名。
 
 ## Purpose
 
@@ -92,7 +92,7 @@ python -m http.server 8000
 1. 建立 repo：`astra-3d-resource-hub`
 2. 推送所有檔案到 `main` 分支（根目錄包含 `index.html`）
 3. 到 GitHub：Settings → Pages → Source：`Deploy from branch` → Branch：`main` / `/ (root)`
-4. 等待部署，完成後網址為：`https://USERNAME.github.io/astra-3d-resource-hub/`
+4. 等待部署，完成後網址為：`https://rita112025-cpu.github.io/astra-3d-resource-hub/`
 
 ## Repo Settings 建議
 
